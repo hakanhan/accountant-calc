@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canada Salary Calculator 2026 | Infralix</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #f1572b 0%, #d14520 100%);
+      color: white;
+      padding: 40px 30px;
+      text-align: center;
+    }
+    
+    .header h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    
+    .header p {
+      font-size: 16px;
+      opacity: 0.95;
+      margin-top: 8px;
+    }
+    
+    .calculator {
+      padding: 40px 30px;
+    }
+    
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 24px;
+      background: #f1572b;
+      border-radius: 2px;
+    }
+    
+    .calc-type {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    
+    .type-card {
+      padding: 25px 20px;
+      border: 3px solid #e0e0e0;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+    }
+    
+    .type-card:hover {
+      border-color: #f1572b;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 20px rgba(241,87,43,0.2);
+    }
+    
+    .type-card.active {
+      border-color: #f1572b;
+      background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    }
+    
+    .type-card-icon {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+    
+    .type-card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    
+    .type-card-desc {
+      font-size: 13px;
+      color: #666;
+    }
+    
+    .calc-direction {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 12px;
+    }
+    
+    .direction-button {
+      padding: 15px;
+      background: white;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      font-weight: 600;
+      font-size: 15px;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .direction-button:hover {
+      border-color: #f1572b;
+    }
+    
+    .direction-button.active {
+      background: linear-gradient(135deg, #f1572b 0%, #d14520 100%);
+      color: white;
+      border-color: #f1572b;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333;
+      font-size: 14px;
+    }
+    
+    .input-group {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .input-with-currency {
+      position: relative;
+      flex: 1;
+    }
+    
+    .currency-badge {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #f1572b;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      pointer-events: none;
+    }
+    
+    select, input {
+      width: 100%;
+      padding: 12px 15px;
+      font-size: 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-family: inherit;
+    }
+    
+    .input-with-currency input {
+      padding-right: 65px;
+    }
+    
+    select:focus, input:focus {
+      outline: none;
+      border-color: #f1572b;
+      box-shadow: 0 0 0 3px rgba(241,87,43,0.1);
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    
+    .salary-estimate {
+      background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border-left: 4px solid #2196F3;
+    }
+    
+    .estimate-label {
+      font-size: 13px;
+      color: #1565c0;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    .estimate-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    
+    .estimate-item {
+      background: white;
+      padding: 12px;
+      border-radius: 8px;
+    }
+    
+    .estimate-item-label {
+      font-size: 11px;
+      color: #666;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .estimate-item-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1565c0;
+    }
+    
+    .calc-button {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #f1572b 0%, #d14520 100%);
+      color: white;
+      border: none;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 12px;
+      transition: all 0.3s;
+      margin-top: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .calc-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(241,87,43,0.4);
+    }
+    
+    .calc-button:active {
+      transform: translateY(0);
+    }
+    
+    .results {
+      display: none;
+      margin-top: 50px;
+      animation: fadeIn 0.5s;
+      padding-top: 40px;
+      border-top: 3px solid #e0e0e0;
+    }
+    
+    .results.show {
+      display: block;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .summary-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 35px 30px;
+      border-radius: 16px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 40px rgba(102,126,234,0.3);
+    }
+    
+    .summary-title {
+      font-size: 24px;
+      margin-bottom: 25px;
+      font-weight: 700;
+      text-align: center;
+    }
+    
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+    }
+    
+    .summary-item h3 {
+      font-size: 13px;
+      opacity: 0.9;
+      margin-bottom: 8px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .summary-item p {
+      font-size: 32px;
+      font-weight: 700;
+    }
+    
+    .breakdown {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 25px;
+    }
+    
+    .breakdown h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #333;
+      font-weight: 700;
+    }
+    
+    .breakdown-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .breakdown-table tr {
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .breakdown-table tr:last-child {
+      border-bottom: none;
+    }
+    
+    .breakdown-table td {
+      padding: 14px 0;
+      font-size: 15px;
+    }
+    
+    .breakdown-table td:first-child {
+      color: #666;
+    }
+    
+    .breakdown-table td:last-child {
+      text-align: right;
+      font-weight: 600;
+      color: #333;
+      font-variant-numeric: tabular-nums;
+    }
+    
+    .breakdown-table tr.total td {
+      padding-top: 18px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #f1572b;
+    }
+    
+    .breakdown-table tr.net td {
+      padding-top: 18px;
+      font-size: 22px;
+      font-weight: 700;
+      color: #4CAF50;
+    }
+    
+    .chart-container {
+      background: white;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 25px;
+    }
+    
+    .chart-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #333;
+      text-align: center;
+    }
+    
+    .chart-wrapper {
+      position: relative;
+      height: 300px;
+    }
+    
+    .monthly-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+    
+    .monthly-table th {
+      background: #f1572b;
+      color: white;
+      padding: 14px 12px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    
+    .monthly-table td {
+      padding: 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .monthly-table tr:nth-child(even) {
+      background: #f8f9fa;
+    }
+    
+    .monthly-table tr:last-child td {
+      font-weight: 700;
+      background: #fff3e0;
+      color: #f1572b;
+      border-bottom: none;
+    }
+    
+    .pay-frequency-info {
+      background: #e3f2fd;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+      font-size: 13px;
+      color: #1976d2;
+      line-height: 1.6;
+    }
+    
+    .cta-box {
+      background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+      padding: 30px;
+      border-radius: 12px;
+      margin-top: 30px;
+      text-align: center;
+    }
+    
+    .cta-box h3 {
+      font-size: 22px;
+      margin-bottom: 15px;
+      color: #333;
+    }
+    
+    .cta-box p {
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+    
+    .cta-button {
+      display: inline-block;
+      padding: 14px 40px;
+      background: #f1572b;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 700;
+      transition: all 0.3s;
+      font-size: 16px;
+    }
+    
+    .cta-button:hover {
+      background: #d14520;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(241,87,43,0.4);
+    }
+    
+    .disclaimer {
+      margin-top: 30px;
+      padding: 20px;
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #856404;
+      line-height: 1.7;
+    }
+    
+    @media (max-width: 768px) {
+      .calc-type {
+        grid-template-columns: 1fr;
+      }
+      
+      .calc-direction {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .estimate-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .header h1 {
+        font-size: 28px;
+      }
+      
+      .calculator {
+        padding: 30px 20px;
+      }
+      
+      .chart-wrapper {
+        height: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>🇨🇦 Canada Salary Calculator 2026</h1>
+    <p>Complete tax calculation with CPP, EI, detailed breakdown & visual charts</p>
+    <p style="font-size: 14px; margin-top: 12px; opacity: 0.9;">Free Professional Tool by <strong>Infralix</strong></p>
+  </div>
+  
+  <div class="calculator">
+    <!-- Salary Type Selection -->
+    <div class="section-title">1️⃣ Select Salary Type</div>
+    <div class="calc-type">
+      <div class="type-card active" onclick="setSalaryType('annual')">
+        <div class="type-card-icon">📅</div>
+        <div class="type-card-title">Annual Salary</div>
+        <div class="type-card-desc">Fixed yearly amount</div>
+      </div>
+      
+      <div class="type-card" onclick="setSalaryType('hourly')">
+        <div class="type-card-icon">⏰</div>
+        <div class="type-card-title">Hourly Rate</div>
+        <div class="type-card-desc">Per hour calculation</div>
+      </div>
+    </div>
+    
+    <!-- Calculation Direction -->
+    <div class="section-title">2️⃣ Select Calculation Direction</div>
+    <div class="calc-direction">
+      <div class="direction-button active" onclick="setDirection('grossToNet')">
+        <span>📊</span> Gross → Net
+      </div>
+      <div class="direction-button" onclick="setDirection('netToGross')">
+        <span>💰</span> Net → Gross
+      </div>
+    </div>
+    
+    <!-- Basic Info -->
+    <div class="section-title">3️⃣ Enter Your Information</div>
+    
+    <div class="form-row">
+      <div class="form-group">
+        <label for="province">Province / Territory:</label>
+        <select id="province">
+          <option value="ON">Ontario</option>
+          <option value="BC">British Columbia</option>
+          <option value="AB">Alberta</option>
+          <option value="QC">Quebec</option>
+          <option value="NS">Nova Scotia</option>
+          <option value="NB">New Brunswick</option>
+          <option value="MB">Manitoba</option>
+          <option value="SK">Saskatchewan</option>
+          <option value="PE">Prince Edward Island</option>
+          <option value="NL">Newfoundland & Labrador</option>
+          <option value="YT">Yukon</option>
+          <option value="NT">Northwest Territories</option>
+          <option value="NU">Nunavut</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="payFrequency">Pay Frequency:</label>
+        <select id="payFrequency">
+          <option value="annual">Annual</option>
+          <option value="monthly">Monthly</option>
+          <option value="biweekly">Bi-weekly (26 pays)</option>
+          <option value="weekly">Weekly (52 pays)</option>
+        </select>
+      </div>
+    </div>
+    
+    <!-- Annual Salary Input -->
+    <div id="annual-inputs">
+      <div class="form-group">
+        <label for="annualSalary" id="annualLabel">Gross Annual Salary:</label>
+        <div class="input-with-currency">
+          <input type="number" id="annualSalary" placeholder="75000" min="0" step="100">
+          <div class="currency-badge">CAD</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Hourly Rate Inputs -->
+    <div id="hourly-inputs" style="display: none;">
+      <div class="form-group">
+        <label for="hourlyRate">Hourly Rate:</label>
+        <div class="input-with-currency">
+          <input type="number" id="hourlyRate" placeholder="70.00" min="0" step="0.25" oninput="updateEstimate()">
+          <div class="currency-badge">CAD</div>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="hoursPerWeek">Hours per Week:</label>
+          <select id="hoursPerWeek" onchange="handleCustomHours(); updateEstimate();">
+            <option value="40">40 hours (Full-time)</option>
+            <option value="37.5">37.5 hours</option>
+            <option value="35">35 hours</option>
+            <option value="30">30 hours (Part-time)</option>
+            <option value="20">20 hours</option>
+            <option value="custom">Custom</option>
+          </select>
+          <input type="number" id="customHours" placeholder="40" min="1" max="80" step="0.5" 
+                 style="display:none; margin-top: 10px;" oninput="updateEstimate()">
+        </div>
+        
+        <div class="form-group">
+          <label for="weeksPerYear">Weeks per Year:</label>
+          <select id="weeksPerYear" onchange="handleCustomWeeks(); updateEstimate();">
+            <option value="52">52 weeks (No vacation)</option>
+            <option value="50">50 weeks (2 weeks vacation)</option>
+            <option value="48">48 weeks (4 weeks vacation)</option>
+            <option value="46">46 weeks (6 weeks vacation)</option>
+            <option value="custom">Custom</option>
+          </select>
+          <input type="number" id="customWeeks" placeholder="52" min="1" max="52" step="1" 
+                 style="display:none; margin-top: 10px;" oninput="updateEstimate()">
+        </div>
+      </div>
+      
+      <!-- Salary Estimate -->
+      <div class="salary-estimate" id="salaryEstimate" style="display: none;">
+        <div class="estimate-label">📊 ESTIMATED ANNUAL SALARY</div>
+        <div class="estimate-grid">
+          <div class="estimate-item">
+            <div class="estimate-item-label">Gross Annual</div>
+            <div class="estimate-item-value" id="estimatedGross">$0</div>
+          </div>
+          <div class="estimate-item">
+            <div class="estimate-item-label">Est. Net Annual</div>
+            <div class="estimate-item-value" id="estimatedNet" style="color: #4CAF50;">~$0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <button class="calc-button" onclick="calculateTax()">
+      <span id="buttonText">📊 Calculate Salary Breakdown</span>
+    </button>
+    
+    <div id="results" class="results">
+      <!-- Summary Card -->
+      <div class="summary-card">
+        <div class="summary-title">💼 Your Salary Summary</div>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <h3>Gross Annual</h3>
+            <p id="summary-gross">-</p>
+          </div>
+          <div class="summary-item">
+            <h3>Net Annual</h3>
+            <p id="summary-net">-</p>
+          </div>
+          <div class="summary-item">
+            <h3>Monthly Net</h3>
+            <p id="summary-monthly">-</p>
+          </div>
+          <div class="summary-item">
+            <h3>Effective Rate</h3>
+            <p id="summary-rate">-</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Pay Breakdown -->
+      <div class="breakdown">
+        <h2>💵 Your Take-Home Pay</h2>
+        <table class="breakdown-table">
+          <tr id="hourly-net-row" style="display:none;">
+            <td>Net Hourly Rate</td>
+            <td id="pay-hourly-net">-</td>
+          </tr>
+          <tr>
+            <td>Annual Net Income</td>
+            <td id="pay-annual">-</td>
+          </tr>
+          <tr>
+            <td>Monthly Net Pay</td>
+            <td id="pay-monthly">-</td>
+          </tr>
+          <tr>
+            <td>Bi-weekly Net Pay (26 pays)</td>
+            <td id="pay-biweekly">-</td>
+          </tr>
+          <tr>
+            <td>Weekly Net Pay (52 pays)</td>
+            <td id="pay-weekly">-</td>
+          </tr>
+        </table>
+        <div class="pay-frequency-info">
+          ℹ️ <strong>Note:</strong> In Canada, payroll withholding is calculated on an annualized basis. 
+          Your net pay per period remains <strong>consistent throughout the year</strong>.
+        </div>
+      </div>
+      
+      <!-- Deductions Breakdown -->
+      <div class="breakdown">
+        <h2>💰 Annual Deductions Breakdown</h2>
+        <table class="breakdown-table">
+          <tr>
+            <td>Gross Annual Income</td>
+            <td id="detail-gross">-</td>
+          </tr>
+          <tr>
+            <td>CPP Contribution (5.95%)</td>
+            <td id="detail-cpp">-</td>
+          </tr>
+          <tr id="cpp2-row" style="display:none;">
+            <td>CPP2 Enhanced (4.00%)</td>
+            <td id="detail-cpp2">-</td>
+          </tr>
+          <tr>
+            <td>EI Premium (1.63%)</td>
+            <td id="detail-ei">-</td>
+          </tr>
+          <tr>
+            <td>Federal Income Tax</td>
+            <td id="detail-federal">-</td>
+          </tr>
+          <tr>
+            <td>Provincial Income Tax</td>
+            <td id="detail-provincial">-</td>
+          </tr>
+          <tr class="total">
+            <td>Total Annual Deductions</td>
+            <td id="detail-total">-</td>
+          </tr>
+          <tr class="net">
+            <td>Net Annual Income</td>
+            <td id="detail-net">-</td>
+          </tr>
+        </table>
+      </div>
+      
+      <!-- Pay Period Table -->
+      <div class="breakdown">
+        <h2 id="period-table-title">📅 Pay Period Breakdown (Consistent Year-Round)</h2>
+        <div style="max-height: 400px; overflow-y: auto; border: 1px solid #e0e0e0; border-radius: 8px;">
+          <table class="monthly-table">
+            <thead style="position: sticky; top: 0; z-index: 10;">
+              <tr>
+                <th id="period-header">Period</th>
+                <th>Gross</th>
+                <th>Deductions</th>
+                <th>Net Pay</th>
+              </tr>
+            </thead>
+            <tbody id="monthly-tbody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Charts -->
+      <div class="chart-container">
+        <div class="chart-title">📊 Income Distribution</div>
+        <div class="chart-wrapper">
+          <canvas id="incomeChart"></canvas>
+        </div>
+      </div>
+      
+      <div class="chart-container">
+        <div class="chart-title">🥧 Deductions Breakdown</div>
+        <div class="chart-wrapper">
+          <canvas id="taxChart"></canvas>
+        </div>
+      </div>
+      
+      <!-- Employer Cost -->
+      <div class="breakdown">
+        <h2>💡 Employer Contributions (Hidden Costs)</h2>
+        <table class="breakdown-table">
+          <tr>
+            <td>Employer CPP Match</td>
+            <td id="employer-cpp">-</td>
+          </tr>
+          <tr id="employer-cpp2-row" style="display:none;">
+            <td>Employer CPP2 Match</td>
+            <td id="employer-cpp2">-</td>
+          </tr>
+          <tr>
+            <td>Employer EI Premium (1.4x)</td>
+            <td id="employer-ei">-</td>
+          </tr>
+          <tr class="total">
+            <td><strong>Total Employer Cost</strong></td>
+            <td id="employer-total">-</td>
+          </tr>
+        </table>
+        <p style="margin-top: 15px; color: #666; font-size: 14px; line-height: 1.6;">
+          💼 Your employer pays an additional <span id="employer-summary" style="color: #f1572b; font-weight: 700;">-</span> 
+          in mandatory contributions. Your <strong>true cost to company</strong> is 
+          <span id="total-cost" style="color: #f1572b; font-weight: 700;">-</span>!
+        </p>
+      </div>
+      
+      <!-- CTA -->
+      <div class="cta-box">
+        <h3>💼 Need Business Tax Help?</h3>
+        <p>
+          Infralix Invoice Manager helps Canadian small businesses track income, expenses, 
+          calculate HST/GST, and prepare tax documents for CRA filing.
+        </p>
+        <a href="https://infralix.com/signup" class="cta-button">Try Infralix Free →</a>
+      </div>
+    </div>
+    
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+      ⚠️ <strong>Disclaimer:</strong> This calculator provides estimates based on 2026 CRA tax brackets, 
+      CPP/EI rates, and basic personal amounts. Actual taxes may vary based on deductions, credits, 
+      and individual circumstances. This is not professional tax advice. Consult a qualified tax professional 
+      or accountant for personalized guidance.
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================================
+// GLOBAL STATE
+// ============================================================================
+let salaryType = 'annual'; // 'annual' or 'hourly'
+let direction = 'grossToNet'; // 'grossToNet' or 'netToGross'
+let incomeChart = null;
+let taxChart = null;
+
+// ============================================================================
+// 2026 TAX DATA
+// ============================================================================
+
+const federalBrackets2026 = [
+  { limit: 58523, rate: 0.14 },
+  { limit: 117045, rate: 0.205 },
+  { limit: 181440, rate: 0.26 },
+  { limit: 258482, rate: 0.29 },
+  { limit: Infinity, rate: 0.33 }
+];
+
+const provincialBrackets2026 = {
+  ON: [{ limit: 52417, rate: 0.0505 }, { limit: 104835, rate: 0.0915 }, { limit: 150000, rate: 0.1116 }, { limit: 220000, rate: 0.1216 }, { limit: Infinity, rate: 0.1316 }],
+  BC: [{ limit: 48908, rate: 0.0506 }, { limit: 97816, rate: 0.077 }, { limit: 112365, rate: 0.105 }, { limit: 136405, rate: 0.1229 }, { limit: 184857, rate: 0.147 }, { limit: 268218, rate: 0.168 }, { limit: Infinity, rate: 0.205 }],
+  AB: [{ limit: 151364, rate: 0.10 }, { limit: 181637, rate: 0.12 }, { limit: 242183, rate: 0.13 }, { limit: 363272, rate: 0.14 }, { limit: Infinity, rate: 0.15 }],
+  QC: [{ limit: 52885, rate: 0.14 }, { limit: 105770, rate: 0.19 }, { limit: 128580, rate: 0.24 }, { limit: Infinity, rate: 0.2575 }],
+  NS: [{ limit: 30000, rate: 0.0879 }, { limit: 60000, rate: 0.1495 }, { limit: 93000, rate: 0.1667 }, { limit: 150000, rate: 0.175 }, { limit: Infinity, rate: 0.21 }],
+  NB: [{ limit: 51017, rate: 0.094 }, { limit: 102034, rate: 0.14 }, { limit: 176756, rate: 0.16 }, { limit: Infinity, rate: 0.195 }],
+  MB: [{ limit: 47000, rate: 0.108 }, { limit: 100000, rate: 0.1275 }, { limit: Infinity, rate: 0.174 }],
+  SK: [{ limit: 52635, rate: 0.105 }, { limit: 150432, rate: 0.125 }, { limit: Infinity, rate: 0.145 }],
+  PE: [{ limit: 32656, rate: 0.098 }, { limit: 64313, rate: 0.138 }, { limit: Infinity, rate: 0.167 }],
+  NL: [{ limit: 43198, rate: 0.087 }, { limit: 86395, rate: 0.145 }, { limit: 154244, rate: 0.158 }, { limit: 215943, rate: 0.173 }, { limit: Infinity, rate: 0.208 }],
+  YT: [{ limit: 58523, rate: 0.064 }, { limit: 117045, rate: 0.09 }, { limit: 181440, rate: 0.109 }, { limit: 578973, rate: 0.128 }, { limit: Infinity, rate: 0.15 }],
+  NT: [{ limit: 52096, rate: 0.059 }, { limit: 104192, rate: 0.086 }, { limit: 169743, rate: 0.122 }, { limit: Infinity, rate: 0.1405 }],
+  NU: [{ limit: 54361, rate: 0.04 }, { limit: 108722, rate: 0.07 }, { limit: 176667, rate: 0.09 }, { limit: Infinity, rate: 0.115 }]
+};
+
+const basicPersonalAmounts2026 = {
+  federal: 16452,
+  ON: 12989, BC: 13141, AB: 22024, QC: 19001, NS: 9456,
+  NB: 13005, MB: 11141, SK: 18905, PE: 13500, NL: 10818,
+  YT: 16452, NT: 17181, NU: 19210
+};
+
+const cpp2026 = { exemption: 3500, rate: 0.0595, maxEarnings: 74600, maxContribution: 4230.45 };
+const cpp2_2026 = { rate: 0.04, minEarnings: 74600, maxEarnings: 85000, maxContribution: 416.00 };
+const ei2026 = { rate: 0.0163, maxEarnings: 68900, maxPremium: 1123.07, employerRate: 1.4 };
+
+// ============================================================================
+// UI FUNCTIONS
+// ============================================================================
+
+function setSalaryType(type) {
+  salaryType = type;
+  document.querySelectorAll('.type-card').forEach(card => card.classList.remove('active'));
+  event.target.closest('.type-card').classList.add('active');
+  
+  if (type === 'annual') {
+    document.getElementById('annual-inputs').style.display = 'block';
+    document.getElementById('hourly-inputs').style.display = 'none';
+  } else {
+    document.getElementById('annual-inputs').style.display = 'none';
+    document.getElementById('hourly-inputs').style.display = 'block';
+    updateEstimate();
+  }
+  
+  updateLabels();
+}
+
+function setDirection(dir) {
+  direction = dir;
+  document.querySelectorAll('.direction-button').forEach(btn => btn.classList.remove('active'));
+  event.target.closest('.direction-button').classList.add('active');
+  updateLabels();
+}
+
+function updateLabels() {
+  const annualLabel = document.getElementById('annualLabel');
+  const buttonText = document.getElementById('buttonText');
+  
+  if (salaryType === 'annual') {
+    if (direction === 'grossToNet') {
+      annualLabel.textContent = 'Gross Annual Salary:';
+      buttonText.textContent = '📊 Calculate Net Salary';
+    } else {
+      annualLabel.textContent = 'Desired Net Annual Salary:';
+      buttonText.textContent = '💰 Calculate Required Gross';
+    }
+  } else {
+    if (direction === 'grossToNet') {
+      buttonText.textContent = '⏰ Calculate from Hourly Rate';
+    } else {
+      buttonText.textContent = '💰 Calculate Required Hourly Rate';
+    }
+  }
+}
+
+function handleCustomHours() {
+  const select = document.getElementById('hoursPerWeek');
+  const custom = document.getElementById('customHours');
+  custom.style.display = select.value === 'custom' ? 'block' : 'none';
+}
+
+function handleCustomWeeks() {
+  const select = document.getElementById('weeksPerYear');
+  const custom = document.getElementById('customWeeks');
+  custom.style.display = select.value === 'custom' ? 'block' : 'none';
+}
+
+function updateEstimate() {
+  const hourlyRate = parseFloat(document.getElementById('hourlyRate').value) || 0;
+  let hoursPerWeek = parseFloat(document.getElementById('hoursPerWeek').value);
+  if (document.getElementById('hoursPerWeek').value === 'custom') {
+    hoursPerWeek = parseFloat(document.getElementById('customHours').value) || 40;
+  }
+  
+  let weeksPerYear = parseFloat(document.getElementById('weeksPerYear').value);
+  if (document.getElementById('weeksPerYear').value === 'custom') {
+    weeksPerYear = parseFloat(document.getElementById('customWeeks').value) || 52;
+  }
+  
+  const grossAnnual = hourlyRate * hoursPerWeek * weeksPerYear;
+  
+  if (grossAnnual > 0) {
+    document.getElementById('salaryEstimate').style.display = 'block';
+    document.getElementById('estimatedGross').textContent = formatCurrency(grossAnnual);
+    
+    // Quick net estimate (approximate 70%)
+    const quickNet = grossAnnual * 0.70;
+    document.getElementById('estimatedNet').textContent = '~' + formatCurrency(quickNet);
+  } else {
+    document.getElementById('salaryEstimate').style.display = 'none';
+  }
+}
+
+// ============================================================================
+// TAX CALCULATION
+// ============================================================================
+
+function calculateBracketTax(income, brackets) {
+  let tax = 0;
+  let previousLimit = 0;
+  
+  for (let bracket of brackets) {
+    if (income > previousLimit) {
+      const taxableInBracket = Math.min(income - previousLimit, bracket.limit - previousLimit);
+      tax += taxableInBracket * bracket.rate;
+      previousLimit = bracket.limit;
+    } else {
+      break;
+    }
+  }
+  
+  return tax;
+}
+
+function calculateGrossToNet(grossIncome, province) {
+  let cpp = 0;
+  if (grossIncome > cpp2026.exemption) {
+    const pensionableEarnings = Math.min(grossIncome, cpp2026.maxEarnings) - cpp2026.exemption;
+    cpp = Math.min(pensionableEarnings * cpp2026.rate, cpp2026.maxContribution);
+  }
+  
+  let cpp2 = 0;
+  if (grossIncome > cpp2_2026.minEarnings) {
+    const cpp2Earnings = Math.min(grossIncome, cpp2_2026.maxEarnings) - cpp2_2026.minEarnings;
+    cpp2 = Math.min(cpp2Earnings * cpp2_2026.rate, cpp2_2026.maxContribution);
+  }
+  
+  const ei = Math.min(grossIncome * ei2026.rate, ei2026.maxPremium);
+  
+  const federalTax = calculateBracketTax(grossIncome, federalBrackets2026);
+  const federalBasicCredit = basicPersonalAmounts2026.federal * 0.14;
+  const federalTaxFinal = Math.max(0, federalTax - federalBasicCredit);
+  
+  const provBrackets = provincialBrackets2026[province] || provincialBrackets2026.ON;
+  const provincialTax = calculateBracketTax(grossIncome, provBrackets);
+  const provincialBPA = basicPersonalAmounts2026[province] || basicPersonalAmounts2026.ON;
+  const provincialRate = provBrackets[0].rate;
+  const provincialBasicCredit = provincialBPA * provincialRate;
+  const provincialTaxFinal = Math.max(0, provincialTax - provincialBasicCredit);
+  
+  const totalDeductions = cpp + cpp2 + ei + federalTaxFinal + provincialTaxFinal;
+  const netIncome = grossIncome - totalDeductions;
+  
+  return {
+    gross: grossIncome,
+    net: netIncome,
+    cpp, cpp2, ei,
+    federalTax: federalTaxFinal,
+    provincialTax: provincialTaxFinal,
+    totalDeductions
+  };
+}
+
+function calculateNetToGross(targetNet, province) {
+  let low = targetNet;
+  let high = targetNet * 2;
+  let iterations = 0;
+  const maxIterations = 50;
+  const tolerance = 1;
+  
+  while (iterations < maxIterations) {
+    const mid = (low + high) / 2;
+    const result = calculateGrossToNet(mid, province);
+    
+    if (Math.abs(result.net - targetNet) < tolerance) {
+      return result;
+    }
+    
+    if (result.net < targetNet) {
+      low = mid;
+    } else {
+      high = mid;
+    }
+    
+    iterations++;
+  }
+  
+  return calculateGrossToNet((low + high) / 2, province);
+}
+
+// ============================================================================
+// MAIN CALCULATION
+// ============================================================================
+
+function calculateTax() {
+  let annualGross;
+  const province = document.getElementById('province').value;
+  
+  // Get annual gross income
+  if (salaryType === 'annual') {
+    const input = parseFloat(document.getElementById('annualSalary').value);
+    if (!input || input <= 0) {
+      alert('⚠️ Please enter a valid salary amount');
+      return;
+    }
+    annualGross = input;
+  } else {
+    const hourlyRate = parseFloat(document.getElementById('hourlyRate').value);
+    if (!hourlyRate || hourlyRate <= 0) {
+      alert('⚠️ Please enter a valid hourly rate');
+      return;
+    }
+    
+    let hoursPerWeek = parseFloat(document.getElementById('hoursPerWeek').value);
+    if (document.getElementById('hoursPerWeek').value === 'custom') {
+      hoursPerWeek = parseFloat(document.getElementById('customHours').value) || 40;
+    }
+    
+    let weeksPerYear = parseFloat(document.getElementById('weeksPerYear').value);
+    if (document.getElementById('weeksPerYear').value === 'custom') {
+      weeksPerYear = parseFloat(document.getElementById('customWeeks').value) || 52;
+    }
+    
+    annualGross = hourlyRate * hoursPerWeek * weeksPerYear;
+  }
+  
+  // Calculate
+  let result;
+  if (direction === 'netToGross') {
+    result = calculateNetToGross(annualGross, province);
+  } else {
+    result = calculateGrossToNet(annualGross, province);
+  }
+  
+  // Display results
+  displayResults(result, province);
+}
+
+function displayResults(result, province) {
+  // Employer contributions
+  const employerCPP = result.cpp;
+  const employerCPP2 = result.cpp2;
+  const employerEI = result.ei * ei2026.employerRate;
+  const totalEmployerCost = employerCPP + employerCPP2 + employerEI;
+  const totalCostToCompany = result.gross + totalEmployerCost;
+  
+  // Pay breakdowns
+  const netMonthly = result.net / 12;
+  const netBiweekly = result.net / 26;
+  const netWeekly = result.net / 52;
+  const grossMonthly = result.gross / 12;
+  const deductionsMonthly = result.totalDeductions / 12;
+  const effectiveRate = (result.totalDeductions / result.gross * 100).toFixed(1);
+  
+  // Update summary
+  document.getElementById('summary-gross').textContent = formatCurrency(result.gross);
+  document.getElementById('summary-net').textContent = formatCurrency(result.net);
+  document.getElementById('summary-monthly').textContent = formatCurrency(netMonthly);
+  document.getElementById('summary-rate').textContent = effectiveRate + '%';
+  
+  // Update pay breakdown
+  document.getElementById('pay-annual').textContent = formatCurrency(result.net);
+  document.getElementById('pay-monthly').textContent = formatCurrency(netMonthly);
+  document.getElementById('pay-biweekly').textContent = formatCurrency(netBiweekly);
+  document.getElementById('pay-weekly').textContent = formatCurrency(netWeekly);
+  
+  // Hourly net if applicable
+  if (salaryType === 'hourly') {
+    let hoursPerWeek = parseFloat(document.getElementById('hoursPerWeek').value);
+    if (document.getElementById('hoursPerWeek').value === 'custom') {
+      hoursPerWeek = parseFloat(document.getElementById('customHours').value) || 40;
+    }
+    let weeksPerYear = parseFloat(document.getElementById('weeksPerYear').value);
+    if (document.getElementById('weeksPerYear').value === 'custom') {
+      weeksPerYear = parseFloat(document.getElementById('customWeeks').value) || 52;
+    }
+    const totalHours = hoursPerWeek * weeksPerYear;
+    const netHourly = result.net / totalHours;
+    document.getElementById('hourly-net-row').style.display = 'table-row';
+    document.getElementById('pay-hourly-net').textContent = formatCurrency(netHourly) + '/hour';
+  } else {
+    document.getElementById('hourly-net-row').style.display = 'none';
+  }
+  
+  // Update deductions
+  document.getElementById('detail-gross').textContent = formatCurrency(result.gross);
+  document.getElementById('detail-cpp').textContent = '-' + formatCurrency(result.cpp);
+  document.getElementById('detail-cpp2').textContent = '-' + formatCurrency(result.cpp2);
+  document.getElementById('detail-ei').textContent = '-' + formatCurrency(result.ei);
+  document.getElementById('detail-federal').textContent = '-' + formatCurrency(result.federalTax);
+  document.getElementById('detail-provincial').textContent = '-' + formatCurrency(result.provincialTax);
+  document.getElementById('detail-total').textContent = '-' + formatCurrency(result.totalDeductions);
+  document.getElementById('detail-net').textContent = formatCurrency(result.net);
+  
+  // Show/hide CPP2
+  if (result.cpp2 > 0) {
+    document.getElementById('cpp2-row').style.display = 'table-row';
+    document.getElementById('employer-cpp2-row').style.display = 'table-row';
+  } else {
+    document.getElementById('cpp2-row').style.display = 'none';
+    document.getElementById('employer-cpp2-row').style.display = 'none';
+  }
+  
+  // Update employer costs
+  document.getElementById('employer-cpp').textContent = formatCurrency(employerCPP);
+  document.getElementById('employer-cpp2').textContent = formatCurrency(employerCPP2);
+  document.getElementById('employer-ei').textContent = formatCurrency(employerEI);
+  document.getElementById('employer-total').textContent = formatCurrency(totalEmployerCost);
+  document.getElementById('employer-summary').textContent = formatCurrency(totalEmployerCost);
+  document.getElementById('total-cost').textContent = formatCurrency(totalCostToCompany);
+  
+  // Update pay period table
+  updatePayPeriodTable(result);
+  
+  // Update charts
+  updateCharts(result);
+  
+  // Show results
+  document.getElementById('results').classList.add('show');
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function updatePayPeriodTable(result) {
+  const payFrequency = document.getElementById('payFrequency').value;
+  const tbody = document.getElementById('monthly-tbody');
+  tbody.innerHTML = '';
+  
+  let periods, periodGross, periodDeductions, periodNet, periodLabels;
+  
+  switch(payFrequency) {
+    case 'annual':
+      // 1 period - Annual
+      periodGross = result.gross;
+      periodDeductions = result.totalDeductions;
+      periodNet = result.net;
+      periodLabels = ['Annual Payment'];
+      document.getElementById('period-table-title').textContent = '📅 Annual Payment';
+      document.getElementById('period-header').textContent = 'Period';
+      break;
+      
+    case 'monthly':
+      // 12 periods - Monthly
+      periodGross = result.gross / 12;
+      periodDeductions = result.totalDeductions / 12;
+      periodNet = result.net / 12;
+      periodLabels = ['January', 'February', 'March', 'April', 'May', 'June', 
+                      'July', 'August', 'September', 'October', 'November', 'December'];
+      document.getElementById('period-table-title').textContent = '📅 Monthly Breakdown (12 Months)';
+      document.getElementById('period-header').textContent = 'Month';
+      break;
+      
+    case 'biweekly':
+      // 26 periods - Bi-weekly
+      periodGross = result.gross / 26;
+      periodDeductions = result.totalDeductions / 26;
+      periodNet = result.net / 26;
+      periodLabels = [];
+      for (let i = 1; i <= 26; i++) {
+        periodLabels.push(`Pay Period ${i}`);
+      }
+      document.getElementById('period-table-title').textContent = '📅 Bi-weekly Breakdown (26 Pay Periods)';
+      document.getElementById('period-header').textContent = 'Pay Period';
+      break;
+      
+    case 'weekly':
+      // 52 periods - Weekly
+      periodGross = result.gross / 52;
+      periodDeductions = result.totalDeductions / 52;
+      periodNet = result.net / 52;
+      periodLabels = [];
+      for (let i = 1; i <= 52; i++) {
+        periodLabels.push(`Week ${i}`);
+      }
+      document.getElementById('period-table-title').textContent = '📅 Weekly Breakdown (52 Weeks)';
+      document.getElementById('period-header').textContent = 'Week';
+      break;
+  }
+  
+  // Create rows for each period
+  periodLabels.forEach(label => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${label}</td>
+      <td>${formatCurrency(periodGross)}</td>
+      <td>-${formatCurrency(periodDeductions)}</td>
+      <td><strong>${formatCurrency(periodNet)}</strong></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  
+  // Total row
+  const totalTr = document.createElement('tr');
+  totalTr.innerHTML = `
+    <td><strong>ANNUAL TOTAL</strong></td>
+    <td><strong>${formatCurrency(result.gross)}</strong></td>
+    <td><strong>-${formatCurrency(result.totalDeductions)}</strong></td>
+    <td><strong>${formatCurrency(result.net)}</strong></td>
+  `;
+  tbody.appendChild(totalTr);
+}
+
+function updateCharts(result) {
+  if (incomeChart) incomeChart.destroy();
+  if (taxChart) taxChart.destroy();
+  
+  const incomeCtx = document.getElementById('incomeChart').getContext('2d');
+  incomeChart = new Chart(incomeCtx, {
+    type: 'pie',
+    data: {
+      labels: ['Net Income (Take-Home)', 'Total Deductions'],
+      datasets: [{
+        data: [result.net, result.totalDeductions],
+        backgroundColor: ['#4CAF50', '#f1572b'],
+        borderWidth: 3,
+        borderColor: '#fff'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 15, font: { size: 13 } } },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const value = formatCurrency(context.parsed);
+              const percent = ((context.parsed / result.gross) * 100).toFixed(1);
+              return `${context.label}: ${value} (${percent}%)`;
+            }
+          }
+        }
+      }
+    }
+  });
+  
+  const taxCtx = document.getElementById('taxChart').getContext('2d');
+  const taxData = {
+    labels: ['CPP', 'EI', 'Federal Tax', 'Provincial Tax'],
+    values: [result.cpp, result.ei, result.federalTax, result.provincialTax]
+  };
+  
+  if (result.cpp2 > 0) {
+    taxData.labels.splice(1, 0, 'CPP2');
+    taxData.values.splice(1, 0, result.cpp2);
+  }
+  
+  taxChart = new Chart(taxCtx, {
+    type: 'pie',
+    data: {
+      labels: taxData.labels,
+      datasets: [{
+        data: taxData.values,
+        backgroundColor: ['#667eea', '#764ba2', '#f1572b', '#d14520', '#ff6b6b'],
+        borderWidth: 3,
+        borderColor: '#fff'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 15, font: { size: 13 } } },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const value = formatCurrency(context.parsed);
+              const percent = ((context.parsed / result.totalDeductions) * 100).toFixed(1);
+              return `${context.label}: ${value} (${percent}%)`;
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+function formatCurrency(amount) {
+  return '$' + Math.round(amount).toLocaleString('en-CA');
+}
+</script>
+
+</body>
+</html>
